@@ -42,6 +42,10 @@ body {
   margin: 0;
 }
 
+.leaderboard-link {
+  color: #c7d2fe;
+}
+
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -322,4 +326,20 @@ button.secondary:hover { background: #273449; }
 @media (max-width: 520px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .quiz-top-bar { flex-direction: column; }
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
 }

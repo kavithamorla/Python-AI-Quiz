@@ -9,8 +9,9 @@ gets a fresh AI-generated set of questions (via Groq), and has 20 minutes to fin
 - Each participant gets a different question set (randomized subtopic focus + seed)
 - 20-minute countdown timer with auto-submit when time runs out
 - Automatic scoring: score, percentage, correct/wrong counts
+- Leaderboard at `/leaderboard` with name and marks table
 - Full review for every wrong answer: your answer, the correct answer, and an explanation
-- No database required — fully stateless
+- Scores stored in `leaderboard.json` (file-based, no database required)
 
 ## Project Structure
 ```

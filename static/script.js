@@ -37,6 +37,18 @@ function clearError() {
   errorMsg.textContent = "";
 }
 
+async function submitLeaderboardScore(payload) {
+  try {
+    await fetch("/api/leaderboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    console.error("Failed to save leaderboard entry:", err);
+  }
+}
+
 startForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError();
@@ -207,6 +219,13 @@ function gradeQuiz(quiz, timeExpired) {
   document.getElementById("stat-percentage").textContent = `${percentage}%`;
   document.getElementById("stat-correct").textContent = correctCount;
   document.getElementById("stat-wrong").textContent = wrongCount;
+
+  submitLeaderboardScore({
+    name: currentName,
+    score: correctCount,
+    total,
+    percentage,
+  });
 
   showSection(resultsSection);
 }

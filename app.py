@@ -2,6 +2,7 @@ import os
 import json
 import re
 import random
+from datetime import datetime, timezone
 from flask import Flask, render_template, request, jsonify
 from groq import Groq
 from dotenv import load_dotenv
@@ -20,6 +21,7 @@ MODEL_NAME = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
 TOPIC = "Python"
 DIFFICULTY = "medium"
 NUM_QUESTIONS = 10
+LEADERBOARD_FILE = os.path.join(app.root_path, "leaderboard.json")
 
 # Pool of Python subtopics used to vary question focus between participants
 SUBTOPIC_POOL = [
@@ -130,9 +132,40 @@ def validate_quiz(quiz_json):
     return quiz_json
 
 
+def load_leaderboard():
+    if not os.path.exists(LEADERBOARD_FILE):
+        return []
+    try:
+        with open(LEADERBOARD_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, list) else []
+    except Exception:
+        return []
+
+
+def save_leaderboard(entries):
+    with open(LEADERBOARD_FILE, "w", encoding="utf-8") as f:
+        json.dump(entries, f, indent=2)
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/leaderboard")
+def leaderboard():
+    entries = load_leaderboard()
+    sorted_entries = sorted(
+        entries,
+        key=lambda item: (
+            item.get("score", 0),
+            item.get("percentage", 0),
+            item.get("submitted_at", "")
+        ),
+        reverse=True
+    )
+    return render_template("leaderboard.html", entries=sorted_entries)
 
 
 @app.route("/api/generate-quiz", methods=["POST"])
@@ -182,6 +215,41 @@ def generate_quiz():
     return jsonify({
         "error": f"Groq API error: {str(e)}"
     }), 502
+
+
+@app.route("/api/leaderboard", methods=["POST"])
+def add_leaderboard_entry():
+    data = request.get_json(silent=True) or {}
+    name = (data.get("name") or "").strip()
+    score = data.get("score")
+    total = data.get("total")
+    percentage = data.get("percentage")
+
+    if not name:
+        return jsonify({"error": "Name is required."}), 400
+    if len(name) > 100:
+        return jsonify({"error": "Name is too long."}), 400
+
+    try:
+        score = int(score)
+        total = int(total)
+        percentage = float(percentage)
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid score payload."}), 400
+
+    if total <= 0 or score < 0 or score > total or percentage < 0 or percentage > 100:
+        return jsonify({"error": "Score values are out of range."}), 400
+
+    entries = load_leaderboard()
+    entries.append({
+        "name": name,
+        "score": score,
+        "total": total,
+        "percentage": round(percentage, 1),
+        "submitted_at": datetime.now(timezone.utc).isoformat()
+    })
+    save_leaderboard(entries)
+    return jsonify({"status": "ok"}), 201
 
 
 if __name__ == "__main__":
