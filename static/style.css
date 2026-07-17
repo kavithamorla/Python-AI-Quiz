@@ -44,7 +44,7 @@ body {
 
 .hero-copy, .hero-panel {
   border-radius: 28px;
-  padding: 28px;
+  padding: 22px;
 }
 
 .hero-copy h1, .card h1, .card h2 {
@@ -88,8 +88,8 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 18px;
-  border-radius: 18px;
+  padding: 12px 14px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.62);
   border: 1px solid rgba(23, 23, 23, 0.08);
 }
@@ -98,7 +98,7 @@ body {
 .panel-stat strong { font-size: 0.96rem; }
 
 .card {
-  padding: 28px;
+  padding: 22px;
   margin-bottom: 20px;
   border-radius: 28px;
 }
@@ -312,8 +312,8 @@ button:hover { transform: translateY(-1px); }
 .stat-box {
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(23, 23, 23, 0.08);
-  border-radius: 20px;
-  padding: 18px 14px;
+  border-radius: 18px;
+  padding: 14px 12px;
   text-align: center;
 }
 
@@ -343,8 +343,8 @@ button:hover { transform: translateY(-1px); }
 }
 
 .result-item {
-  padding: 14px;
-  border-radius: 18px;
+  padding: 12px;
+  border-radius: 16px;
   margin-bottom: 12px;
   border: 1px solid rgba(23, 23, 23, 0.08);
   background: rgba(255, 255, 255, 0.76);
@@ -423,7 +423,7 @@ button:hover { transform: translateY(-1px); }
 
 @media (max-width: 640px) {
   .shell { width: min(100% - 20px, 1120px); padding-top: 12px; }
-  .hero-copy, .hero-panel, .card { padding: 20px; border-radius: 22px; }
+  .hero-copy, .hero-panel, .card { padding: 18px; border-radius: 20px; }
   .hero-copy h1 { font-size: 2rem; }
   .stats-grid { grid-template-columns: 1fr; }
 }
