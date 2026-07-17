@@ -18,46 +18,45 @@ MODEL_NAME = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
 
 # Fixed quiz configuration
 TOPIC = "Python"
-DIFFICULTY = "hard"
+DIFFICULTY = "medium"
 NUM_QUESTIONS = 20
 
 # Pool of Python subtopics used to vary question focus between participants
 SUBTOPIC_POOL = [
-    "decorators and closures",
-    "generators and iterators",
-    "the Global Interpreter Lock (GIL) and concurrency",
-    "context managers and the `with` statement",
-    "metaclasses and descriptors",
-    "memory management, reference counting, and garbage collection",
-    "exception handling and custom exceptions",
-    "list/dict/set comprehensions and generator expressions",
-    "the `itertools` and `functools` modules",
-    "asyncio and coroutines",
-    "type hints, `typing`, and static analysis",
-    "object-oriented design: MRO, multiple inheritance, `super()`",
-    "mutable vs immutable types and object identity",
-    "scoping rules (LEGB) and namespaces",
-    "magic/dunder methods and operator overloading",
-    "string formatting, encoding, and Unicode handling",
-    "file I/O, serialization, and the `pickle`/`json` modules",
-    "performance: time/space complexity of built-in operations",
-    "the standard library: `collections`, `heapq`, `bisect`",
-    "packaging, virtual environments, and imports",
-    "slicing, unpacking, and argument passing (*args/**kwargs)",
-    "properties, class methods, static methods",
-    "error-prone Python gotchas (mutable default args, late binding closures)",
-    "regular expressions with the `re` module",
+    "Variables and Data Types",
+    "Strings",
+    "Lists",
+    "Tuples",
+    "Sets",
+    "Dictionaries",
+    "Operators",
+    "Conditional Statements",
+    "Loops",
+    "Functions",
+    "Lambda Functions",
+    "Modules",
+    "Exception Handling",
+    "File Handling",
+    "Object-Oriented Programming",
+    "Inheritance",
+    "Polymorphism",
+    "Encapsulation",
+    "Abstraction",
+    "List Comprehensions",
+    "String Methods",
+    "Dictionary Methods",
+    "Built-in Functions",
+    "Python Interview Questions"
 ]
 
 
 def build_prompt(seed_subtopics, variation_token):
-    """Builds the instruction prompt sent to the Groq LLM for a hard, unique Python quiz."""
+    """Builds the instruction prompt sent to the Groq LLM for a medium-level, unique Python quiz."""
     subtopics_str = ", ".join(seed_subtopics)
     return f"""You are an expert Python instructor and quiz generation engine writing a
-CHALLENGING, HARD-DIFFICULTY multiple-choice quiz for advanced/intermediate-to-advanced
-Python programmers. Generate the quiz strictly as JSON.
+CHALLENGING, MEDIUM-DIFFICULTY multiple-choice quiz for intermediate Python programmers. Generate the quiz strictly as JSON.
 
-Topic: Python (general language + standard library, hard difficulty)
+Topic: Python (general language + standard library, medium difficulty)
 Number of questions: {NUM_QUESTIONS}
 Question type: multiple_choice (exactly 4 options each, exactly 1 correct)
 Emphasize these subtopics across the questions (spread them out, don't repeat the same
@@ -66,10 +65,11 @@ Variation seed (use only to encourage a unique, non-repeating set of questions �
 mention it anywhere in the output): {variation_token}
 
 Rules for question quality:
-- Every question must require real understanding, careful reasoning, or knowledge of subtle
-  Python behavior — not something answerable by guessing or surface-level recall.
-- Favor "what does this code output", "what is the correct behavior", "which statement is
-  true", and precise conceptual questions over trivia.
+- Questions should be medium difficulty.
+- Focus on Python interview and programming basics.
+- Include code output, OOP, functions, loops, strings, lists, tuples, dictionaries, sets,
+  file handling, exception handling, and modules.
+- Avoid very advanced Python internals.
 - All 4 options must be plausible to someone who half-knows the topic (strong distractors);
   avoid options that are obviously wrong or silly.
 - Do not repeat the same question or the same underlying concept twice in this quiz.
@@ -161,13 +161,13 @@ def generate_quiz():
                 {"role": "system", "content": "You output strict JSON only, matching the requested schema."},
                 {"role": "user", "content": prompt},
             ],
-            temperature=0.9,
+            temperature=0.6,
             max_tokens=6000,
         )
         raw_text = completion.choices[0].message.content
         quiz_json = extract_json(raw_text)
         quiz_json = validate_quiz(quiz_json)
-        quiz_json.setdefault("quiz_title", f"Python Quiz (Hard) — {name}")
+        quiz_json.setdefault("quiz_title", f"Python Quiz (Medium) — {name}")
         return jsonify(quiz_json)
 
     except json.JSONDecodeError:
