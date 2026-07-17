@@ -7,3 +7,18 @@
     { "src": "/(.*)", "dest": "app.py" }
   ]
 }
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python"
+    }
+  ],python app.pypython app.py
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ]
+}
