@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welcome to Python Quiz</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>🐍 Welcome to Python Quiz</h1>
+      <p>20 hard, AI-generated Python questions. 20 minutes on the clock. Good luck.</p>
+    </header>
+
+    <!-- Name / Start Section -->
+    <section id="setup-section" class="card">
+      <form id="start-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Enter your full name" required autocomplete="name" />
+        </div>
+        <div class="quiz-meta">
+          <span class="badge">Topic: Python</span>
+          <span class="badge">Difficulty: Hard</span>
+          <span class="badge">20 Questions</span>
+          <span class="badge">20 Minutes</span>
+        </div>
+        <button type="submit" id="generate-btn">Start Quiz</button>
+      </form>
+      <p id="error-msg" class="error hidden"></p>
+    </section>
+
+    <!-- Loading -->
+    <section id="loading-section" class="card hidden">
+      <div class="spinner"></div>
+      <p>Generating your personalized Python quiz...</p>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz-section" class="card hidden">
+      <div class="quiz-top-bar">
+        <div>
+          <h2 id="quiz-title"></h2>
+          <p id="quiz-taker-name" class="muted"></p>
+        </div>
+        <div id="timer" class="timer">20:00</div>
+      </div>
+      <div class="progress-bar-track">
+        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+      </div>
+      <form id="answers-form"></form>
+      <div class="quiz-actions">
+        <button id="submit-quiz-btn">Submit Answers</button>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results-section" class="card hidden">
+      <h2>Results</h2>
+      <p id="results-name" class="muted"></p>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="stat-score">-</div>
+          <div class="stat-label">Score</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-percentage">-</div>
+          <div class="stat-label">Percentage</div>
+        </div>
+        <div class="stat-box correct-box">
+          <div class="stat-value" id="stat-correct">-</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-box incorrect-box">
+          <div class="stat-value" id="stat-wrong">-</div>
+          <div class="stat-label">Wrong</div>
+        </div>
+      </div>
+
+      <h3 class="breakdown-heading">Review</h3>
+      <div id="results-breakdown"></div>
+      <button id="retry-btn" class="secondary">Take Another Quiz</button>
+    </section>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
