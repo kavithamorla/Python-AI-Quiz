@@ -5,7 +5,7 @@ import random
 from flask import Flask, render_template, request, jsonify
 from groq import Groq
 from dotenv import load_dotenv
-
+import traceback
 load_dotenv()
 
 app = Flask(__name__)
@@ -14,12 +14,12 @@ GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 # Model to use for generation. Change if Groq deprecates this model.
-MODEL_NAME = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+MODEL_NAME = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
 
 # Fixed quiz configuration
 TOPIC = "Python"
 DIFFICULTY = "medium"
-NUM_QUESTIONS = 20
+NUM_QUESTIONS = 10
 
 # Pool of Python subtopics used to vary question focus between participants
 SUBTOPIC_POOL = [
@@ -162,7 +162,7 @@ def generate_quiz():
                 {"role": "user", "content": prompt},
             ],
             temperature=0.6,
-            max_tokens=6000,
+            max_tokens=3000,
         )
         raw_text = completion.choices[0].message.content
         quiz_json = extract_json(raw_text)
@@ -177,7 +177,11 @@ def generate_quiz():
     except ValueError as e:
         return jsonify({"error": f"The AI response was malformed: {str(e)}. Please try again."}), 502
     except Exception as e:
-        return jsonify({"error": f"Groq API error: {str(e)}"}), 502
+            traceback.print_exc()
+            print("Groq Error:", e)
+    return jsonify({
+        "error": f"Groq API error: {str(e)}"
+    }), 502
 
 
 if __name__ == "__main__":
