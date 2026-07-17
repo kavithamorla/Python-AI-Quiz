@@ -4,17 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leaderboard - Python Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@300" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-  <div class="app">
-    <header class="app-header">
-      <h1>🏆 Leaderboard</h1>
-      <p>Top quiz scores by participant</p>
-      <p><a class="leaderboard-link" href="/">Back to Quiz</a></p>
-    </header>
-
+  <main class="shell">
     <section class="card">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">trophy</span> Leaderboard</p>
+          <h1>Manual score review</h1>
+          <p class="lede">This page is still available directly, but it is no longer exposed in the normal user flow.</p>
+        </div>
+      </div>
+
       {% if entries %}
       <div class="table-wrap">
         <table class="leaderboard-table">
@@ -42,6 +47,6 @@
       <p class="muted">No scores yet. Complete a quiz to appear here.</p>
       {% endif %}
     </section>
-  </div>
+  </main>
 </body>
 </html>

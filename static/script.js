@@ -88,7 +88,7 @@ startForm.addEventListener("submit", async (e) => {
 
 function renderQuiz(quiz) {
   quizTitleEl.textContent = quiz.quiz_title || "Python Quiz (Hard)";
-  quizTakerNameEl.textContent = `Good luck, ${currentName}!`;
+  quizTakerNameEl.textContent = `Good luck, ${currentName}.`;
   answersForm.innerHTML = "";
 
   quiz.questions.forEach((q, index) => {
@@ -179,7 +179,7 @@ function gradeQuiz(quiz, timeExpired) {
 
     const status = document.createElement("div");
     status.className = "status";
-    status.textContent = isCorrect ? "✔ Correct" : "✘ Incorrect";
+    status.textContent = isCorrect ? "Correct" : "Incorrect";
     item.appendChild(status);
 
     const qText = document.createElement("div");
@@ -213,8 +213,8 @@ function gradeQuiz(quiz, timeExpired) {
   const percentage = Math.round((correctCount / total) * 1000) / 10;
 
   document.getElementById("results-name").textContent = timeExpired
-    ? `${currentName} — time's up! Here's how you did:`
-    : `${currentName}, here's how you did:`;
+    ? `${currentName}, time's up.`
+    : `${currentName}, here are your results.`;
   document.getElementById("stat-score").textContent = `${correctCount}/${total}`;
   document.getElementById("stat-percentage").textContent = `${percentage}%`;
   document.getElementById("stat-correct").textContent = correctCount;

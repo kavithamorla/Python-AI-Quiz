@@ -3,16 +3,26 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Welcome to Python Quiz</title>
+<title>Python Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@300" rel="stylesheet" />
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-  <div class="app">
-    <header class="app-header">
-      <h1>🐍 Welcome to Python Quiz</h1>
-      <p>20 hard, AI-generated Python questions. 20 minutes on the clock. Good luck.</p>
-      <p><a class="leaderboard-link" href="/leaderboard">View Leaderboard</a></p>
-    </header>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">school</span> Python assessment</p>
+        <h1>Focused quiz experience with a quieter, premium finish.</h1>
+        <p class="lede">20 hard Python questions. 20 minutes on the clock. The leaderboard stays off the public path and remains available only by direct route.</p>
+      </div>
+      <div class="hero-panel">
+        <div class="panel-stat"><span class="panel-label">Mode</span><strong>Direct quiz</strong></div>
+        <div class="panel-stat"><span class="panel-label">Access</span><strong>Leaderboard hidden</strong></div>
+        <div class="panel-stat"><span class="panel-label">Theme</span><strong>Minimal, warm, clean</strong></div>
+      </div>
+    </section>
 
     <!-- Name / Start Section -->
     <section id="setup-section" class="card">
@@ -27,7 +37,7 @@
           <span class="badge">20 Questions</span>
           <span class="badge">20 Minutes</span>
         </div>
-        <button type="submit" id="generate-btn">Start Quiz</button>
+        <button type="submit" id="generate-btn" class="button-primary">Start quiz</button>
       </form>
       <p id="error-msg" class="error hidden"></p>
     </section>
@@ -58,7 +68,12 @@
 
     <!-- Results Section -->
     <section id="results-section" class="card hidden">
-      <h2>Results</h2>
+      <div class="results-header">
+        <div>
+          <p class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">verified</span> Results</p>
+          <h2>Your performance</h2>
+        </div>
+      </div>
       <p id="results-name" class="muted"></p>
 
       <div class="stats-grid">
@@ -82,10 +97,9 @@
 
       <h3 class="breakdown-heading">Review</h3>
       <div id="results-breakdown"></div>
-      <a class="leaderboard-link" href="/leaderboard">Go to Leaderboard</a>
-      <button id="retry-btn" class="secondary">Take Another Quiz</button>
+      <button id="retry-btn" class="button-secondary">Take another quiz</button>
     </section>
-  </div>
+  </main>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
