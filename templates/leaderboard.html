@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@300" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main class="shell">
+    <section class="card">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">trophy</span> Leaderboard</p>
+          <h1>Manual score review</h1>
+          <p class="lede">This page remains available directly, but it is no longer surfaced in the normal user flow.</p>
+        </div>
+      </div>
+
+      {% if entries %}
+        <div class="table-wrap">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Accuracy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for entry in entries %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ entry.name }}</td>
+                  <td>{{ entry.score }}/{{ entry.total }}</td>
+                  <td>{{ "%.1f"|format(entry.percentage) }}%</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <p class="empty-title">No leaderboard entries yet</p>
+          <p class="muted">Scores will appear here after quizzes are submitted.</p>
+        </div>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

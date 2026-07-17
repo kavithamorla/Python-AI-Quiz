@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Python Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@300" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">school</span> Python assessment</p>
+        <h1>Quiz interface with a quieter, more polished finish.</h1>
+        <p class="lede">20 minutes. 10 hand-picked Python questions. A direct quiz flow with the leaderboard kept off the public surface.</p>
+      </div>
+      <div class="hero-panel">
+        <div class="panel-stat">
+          <span class="panel-label">Mode</span>
+          <strong>Focused</strong>
+        </div>
+        <div class="panel-stat">
+          <span class="panel-label">Access</span>
+          <strong>Direct quiz</strong>
+        </div>
+        <div class="panel-stat">
+          <span class="panel-label">Leaderboard</span>
+          <strong>Hidden from users</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="setup-section" class="card">
+      <form id="start-form" class="stack">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" placeholder="Enter your name" required autocomplete="name" />
+        </div>
+
+        <div class="quiz-meta" aria-label="Quiz details">
+          <span class="badge">Python</span>
+          <span class="badge">Medium</span>
+          <span class="badge">10 questions</span>
+          <span class="badge">20 minutes</span>
+        </div>
+
+        <button type="submit" id="generate-btn" class="button-primary">Start quiz</button>
+      </form>
+      <p id="error-msg" class="error hidden" role="alert"></p>
+    </section>
+
+    <section id="loading-section" class="card hidden" aria-live="polite">
+      <div class="loading-visual" aria-hidden="true"></div>
+      <p class="muted center">Preparing your quiz.</p>
+    </section>
+
+    <section id="quiz-section" class="card hidden">
+      <div class="quiz-top-bar">
+        <div>
+          <h2 id="quiz-title"></h2>
+          <p id="quiz-taker-name" class="muted"></p>
+        </div>
+        <div id="timer" class="timer">20:00</div>
+      </div>
+      <div class="progress-bar-track" aria-hidden="true">
+        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+      </div>
+      <form id="answers-form"></form>
+      <div class="quiz-actions">
+        <button id="submit-quiz-btn" type="button" class="button-primary">Submit answers</button>
+      </div>
+    </section>
+
+    <section id="results-section" class="card hidden">
+      <div class="results-header">
+        <div>
+          <p class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">verified</span> Results</p>
+          <h2>Your performance</h2>
+          <p id="results-name" class="muted"></p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="stat-score">-</div>
+          <div class="stat-label">Score</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-percentage">-</div>
+          <div class="stat-label">Accuracy</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-correct">-</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-wrong">-</div>
+          <div class="stat-label">Wrong</div>
+        </div>
+      </div>
+
+      <h3 class="breakdown-heading">Review</h3>
+      <div id="results-breakdown"></div>
+      <button id="retry-btn" class="button-secondary" type="button">Take another quiz</button>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
